@@ -3,14 +3,13 @@ from pyspark.sql.types import StructType, StructField, IntegerType, StringType
 from src.jobs import run_query
 
 
-pytestmark = pytest.mark.usefixtures("spark_context", "hive_context")
+pytestmark = pytest.mark.usefixtures("spark_session")
 
 
-def test_it(spark_context, hive_context):
-    """ test that run_test_query works
+def test_it(spark_session):
+    """ test run_test_query with spark_session
     Args:
-        spark_context: test fixture SparkContext
-        hive_context: test fixture HiveContext
+        spark_session: test fixture SparkSession
     """
 
     test_input = [
@@ -25,8 +24,8 @@ def test_it(spark_context, hive_context):
         StructField('country', StringType(), True)
     ])
 
-    input_rdd = spark_context.parallelize(test_input, 1)
-    input_df = hive_context.createDataFrame(input_rdd, schema)
+    input_rdd = spark_session.sparkContext.parallelize(test_input, 1)
+    input_df = spark_session.createDataFrame(input_rdd, schema)
 
     results = run_query.job_runner(input_df)
 

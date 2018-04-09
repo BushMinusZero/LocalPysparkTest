@@ -2,6 +2,7 @@ import pytest
 from pyspark import HiveContext
 from pyspark import SparkConf
 from pyspark import SparkContext
+from pyspark.sql import SparkSession
 import findspark
 findspark.init()
 
@@ -28,3 +29,16 @@ def hive_context(spark_context):
         HiveContext for tests
     """
     return HiveContext(spark_context)
+
+@pytest.fixture(scope="session")
+def spark_session(request):
+    """  fixture for creating a Hive Context. Creating a fixture enables it to be reused across all
+        tests in a session
+    Args:
+        spark_context: spark_context fixture
+    Returns:
+        HiveContext for tests
+    """
+    spark_session = SparkSession.builder.enableHiveSupport().getOrCreate()
+    yield spark_session
+    spark_session.stop()
