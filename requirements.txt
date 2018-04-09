@@ -1,0 +1,11 @@
+attrs==17.4.0
+findspark==1.1.0
+funcsigs==1.0.2
+more-itertools==4.1.0
+pluggy==0.6.0
+py==1.5.3
+py4j==0.10.4
+pypandoc==1.4
+pyspark==2.2.1
+pytest==3.5.0
+six==1.11.0

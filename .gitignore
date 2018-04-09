@@ -1,0 +1,4 @@
+.pytest_cache
+metastore_db/
+derby.log
+*.pyc
